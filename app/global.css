@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+.cus-page {
+    @apply p-10
+}
+
+.cus-h1 {
+    @apply lg:text-6xl md:text-5xl sm:text-4xl;
+}
+
+.cus-mainpage {
+    @apply bg-gradient-to-t from-blue-500 to-blue-800
+}
+
+.cus-lg-highlight-btn {
+    @apply rounded-md py-2 px-12 font-bold
+}
+
+.cards {
+    @apply border border-gray-300 shadow-lg rounded-2xl p-10 flex flex-col justify-center items-center space-y-5 hover:shadow-2xl transition duration-300 ease-in-out hover:scale-105
+}
