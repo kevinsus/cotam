@@ -1,6 +1,7 @@
-import React from 'react';
+import React from "react";
 
-const WaveSvg = () => (
+const WaveSvgFooter = () => {
+  return (
     <svg
         width="100%"
         height="100%"
@@ -19,13 +20,14 @@ const WaveSvg = () => (
         <path id="motionpath" d="M -600 0 0 0" />
         </defs>
         <g>
-        <use href="#wavepath" y="192" fill="#ffffff">
+        <use href="#wavepath" y="192" fill="var(--color-blue-800)">
             <animateMotion dur="5s" repeatCount="indefinite">
             <mpath href="#motionpath" />
             </animateMotion>
         </use>
         </g>
     </svg>
-);
+  );
+};
 
-export default WaveSvg;
+export default WaveSvgFooter;

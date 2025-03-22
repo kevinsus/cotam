@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+.cus-centerpage {
+    @apply flex flex-col justify-start items-center
+}
+
 .cus-page {
     @apply p-10
 }

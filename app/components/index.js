@@ -1,1 +1,2 @@
-export { default as WaveSVG } from './WaveSvg'
+export { default as WaveHeaderSVG } from './WaveSvg'
+export { default as WaveFooterSVG } from './WaveWvgFooter' 

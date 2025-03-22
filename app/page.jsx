@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import { WaveSVG } from '@/app/components/index'
+import { WaveHeaderSVG, WaveFooterSVG } from '@/app/components/index'
 
 const Home = () => {
   return (
@@ -21,12 +21,12 @@ const Home = () => {
                     />
                 </div>
             </div>
-            <div className='absolute bottom-0 w-full h-1/2'>
-                <WaveSVG/>
+            <div className='absolute bottom-0 w-full h-1/4'>
+                <WaveHeaderSVG/>
             </div>
         </div>
 
-        <div className='text-blue-600 cus-page flex flex-col justify-center items-center gap-10'>
+        <div className='text-blue-600 cus-page cus-centerpage gap-10'>
             <h1 className='cus-h1'>What We Offer</h1>
             <div className='flex gap-5'>
                 <div className='cards text-black'>
@@ -62,7 +62,7 @@ const Home = () => {
             </div>
         </div>
 
-        <div className='text-blue-600 cus-page flex flex-col justify-center items-center gap-10'>
+        <div className='text-blue-600 cus-page cus-centerpage gap-10'>
             <h1 className='cus-h1'>How it works</h1>
             <video width="600" height="600" controls preload="none">
                 <source src="/path/to/video.mp4" type="video/mp4" />
@@ -79,14 +79,25 @@ const Home = () => {
             </div>
         </div>
 
-        <div className='flex flex-col text-white justify-center items-center'>
-            <button className='cus-lg-highlight-btn bg-blue-600'>Feedback</button>
-            <p>Want to help improve out app? Share your Feedback</p>
-
-            <p>Course Outline Taxonomical Analysis and Mapping (COTAM) is a tool created by passionate students from Scouts Regiment.</p>
-            <p>This website serve as a general guide to understand the outcomes of a course. Please be aware that the information 
-                provided may change or require correction. It's important to verify any details with the university authorities 
-                before relying on them. We will not be responsible for any issues or misunderstandings that may arise.</p>
+        <div className=''>
+            <div className='cus-centerpage cus-page gap-10'>
+                <div className='cus-centerpage'>
+                    <button className='text-white cus-lg-highlight-btn bg-blue-600'>Feedback</button>
+                    <p className='text-black'>Want to help improve out app? Share your Feedback</p>
+                </div>
+            </div>
+            <div className='w-full h-30'>
+                <WaveFooterSVG />
+            </div>
+            <div className='cus-mainpage cus-page text-white flex flex-col gap-10'>
+                <div>
+                    <p>Course Outline Taxonomical Analysis and Mapping (COTAM) is a tool created by passionate students from Scouts Regiment.</p>
+                    <p>This website serve as a general guide to understand the outcomes of a course. Please be aware that the information 
+                        provided may change or require correction. It's important to verify any details with the university authorities 
+                        before relying on them. We will not be responsible for any issues or misunderstandings that may arise.</p>
+                </div>
+                <div>@copyright 2025 by Kevin Susanto</div>
+            </div>
         </div>
     </div>
   )
