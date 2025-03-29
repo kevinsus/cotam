@@ -1,4 +1,5 @@
 import '@/app/global.css'
+import Provider from '@/components/Provider'
 
 export const metadata = {
     title: 'COTAM',
@@ -10,7 +11,9 @@ const RootLayout = ({ children }) => {
         <html lang='en'>
             <body>
                 <main>
-                    {children}
+                    <Provider>
+                        {children}
+                    </Provider>
                 </main>
             </body>
         </html>
