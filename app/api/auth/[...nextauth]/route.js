@@ -15,7 +15,18 @@ const handler = NextAuth({
         clientId: process.env.GOOGLE_ID,
         clientSecret: process.env.GOOGLE_SECRET
     }),
+    // CredentialsProvider({
+    //     name: 'Credentials',
+    //     credentials: {
+    //         email: { label: "email", type: "email" },
+    //         password: { label: "password", type: "password" }
+    //     },
+    //     async authorize(credentials) {
+    //         console.log(credentials)
+    //     }
+    // }),
   ],
+  secret: process.env.AUTH_SECRET,
   callbacks: {
         async signIn({ profile }) {
             try {
