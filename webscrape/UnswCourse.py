@@ -1,6 +1,5 @@
 import requests
 import re
-import json
 
 # Libraries for mongodb connection
 from pymongo import MongoClient
@@ -8,7 +7,6 @@ from dotenv import load_dotenv, find_dotenv
 import os
 
 # MongoDB connection => https://www.youtube.com/watch?v=UpsZDGutpZc&t=1143s
-
 def get_collections_from_db():
     load_dotenv(find_dotenv())
 
@@ -30,7 +28,6 @@ def get_html(url):
 
 # Main function
 data = {}
-# breakloop = False
 
 def main(filter_year, filter_subject, filter_course):
     courses_collections = get_collections_from_db()
@@ -80,24 +77,8 @@ def main(filter_year, filter_subject, filter_course):
                     else:
                         course_outcome_url = course_outcome_url_mm
 
-                    # print(course, ": ", course_outcome_url)
                     html = get_html(course_outcome_url)
                     CLOs = sorted(set(sorted(re.findall(r'"CLO[0-9] : ([^"]+)"', html))))
-
-                    # f = open("output.html", "w")
-                    # f.write(html)
-                    # f.close()
-
-                    # if year not in data:
-                    #     data[year] = {}
-                    # if subject not in data[year]:
-                    #     data[year][subject] = {}
-                    # if course not in data[year][subject]:
-                    #     data[year][subject][course] = {}
-
-                    # data[year][subject][course][f"T{term}"] = []
-                    # for CLO in CLOs:
-                    #     data[year][subject][course][f"T{term}"].append(CLO)
 
                     data = {
                         "year": year,
@@ -107,21 +88,6 @@ def main(filter_year, filter_subject, filter_course):
                         "outcomes": CLOs
                     }
                     courses_collections.insert_one(data)
-
-                    # print(data)
-
-                    # with open("data.json", "w") as output:
-                    #     json.dump(data, output)
-
-            # if subject == "ACTL":
-            #     breakloop = True
-            #     break
-        
-        # if breakloop:
-        #     break
-
-
-
 
 if __name__ == "__main__":
     # "2025", "ACCT", "ACCT2101"
