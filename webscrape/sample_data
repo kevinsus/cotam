@@ -1,0 +1,60 @@
+{
+    2025 = {
+        "COMP" : {
+            "COMP1511": {
+                "TERM ONE": [
+                    "Formulate a clearly defined research topic and describe its rationale and significance",
+                    "Locate the research in art and design discourse with reference to related practices",
+                    "Formulate a clearly defined research topic and describe its rationale and significance",
+                    "Locate the research in art and design discourse with reference to related practices",
+                ],
+                "T2": [
+                    "Formulate a clearly defined research topic and describe its rationale and significance",
+                    "Locate the research in art and design discourse with reference to related practices",
+                    "Formulate a clearly defined research topic and describe its rationale and significance",
+                    "Locate the research in art and design discourse with reference to related practices",
+                ]
+            },
+            "COMP1521": {
+                "T2": [
+                    "Formulate a clearly defined research topic and describe its rationale and significance",
+                    "Locate the research in art and design discourse with reference to related practices",
+                    "Formulate a clearly defined research topic and describe its rationale and significance",
+                    "Locate the research in art and design discourse with reference to related practices",
+                ]
+            },
+            "COMP1531": {
+                "T3": [
+                    "Formulate a clearly defined research topic and describe its rationale and significance",
+                    "Locate the research in art and design discourse with reference to related practices",
+                    "Formulate a clearly defined research topic and describe its rationale and significance",
+                    "Locate the research in art and design discourse with reference to related practices",
+                ]
+            },
+        },
+        "ACCT" : {
+            "ACCT2101": {
+                "T3": [
+                    "Formulate a clearly defined research topic and describe its rationale and significance",
+                    "Locate the research in art and design discourse with reference to related practices",
+                    "Formulate a clearly defined research topic and describe its rationale and significance",
+                    "Locate the research in art and design discourse with reference to related practices",
+                ]
+            },
+            "ACCT1511": {
+                "T1": [
+                    "Formulate a clearly defined research topic and describe its rationale and significance",
+                    "Locate the research in art and design discourse with reference to related practices",
+                    "Formulate a clearly defined research topic and describe its rationale and significance",
+                    "Locate the research in art and design discourse with reference to related practices",
+                ]
+            },
+        }
+    }
+    2024 = {
+
+    }
+    2023 = {
+
+    }
+}
