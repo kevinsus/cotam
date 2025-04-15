@@ -26,6 +26,14 @@ def get_html(url):
     response = requests.get(url)
     return response.text
 
+def check_valid_url(url):
+    response = requests.get(url)
+    data = response.json()
+    if data.get("type") == "No Results":
+        return False
+    else:
+        return True
+
 # Main function
 def main(filter_year, filter_subject, filter_course):
     courses_collections = get_collections_from_db()
@@ -70,10 +78,13 @@ def main(filter_year, filter_subject, filter_course):
                     course_outcome_url_mm = f"https://courseoutlines.unsw.edu.au/v1/publicsitecourseoutlines/detail?year={year}&term=Term+{term}&deliveryMode=Multimodal&deliveryFormat=Standard&teachingPeriod=T{term}&deliveryLocation=Kensington&courseCode={course}&activityGroupId=1"
                     
                     course_outcome_url = ""
-                    if get_html(course_outcome_url_ip):
+
+                    if check_valid_url(course_outcome_url_ip):
                         course_outcome_url = course_outcome_url_ip
-                    else:
+                    elif check_valid_url(course_outcome_url_mm):
                         course_outcome_url = course_outcome_url_mm
+                    else:
+                        continue
 
                     html = get_html(course_outcome_url)
                     CLOs = sorted(set(sorted(re.findall(r'"CLO[0-9] : ([^"]+)"', html))))
@@ -92,7 +103,7 @@ if __name__ == "__main__":
     # course outcomes: https://www.unsw.edu.au/course-outlines
     # default: "2025", "ACCT", "ACCT2101"
 
-    main("2025", "LAWS", "LAWS3900")
+    main("2025", "COMP", "COMP6080")
 
 
 # re.search => returns a match object if there is match anywhere in the tring, 
