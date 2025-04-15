@@ -27,8 +27,6 @@ def get_html(url):
     return response.text
 
 # Main function
-data = {}
-
 def main(filter_year, filter_subject, filter_course):
     courses_collections = get_collections_from_db()
 
@@ -90,7 +88,10 @@ def main(filter_year, filter_subject, filter_course):
                     courses_collections.insert_one(data)
 
 if __name__ == "__main__":
-    # "2025", "ACCT", "ACCT2101"
+    # courses: https://timetable.unsw.edu.au/2025/subjectSearch.html
+    # course outcomes: https://www.unsw.edu.au/course-outlines
+    # default: "2025", "ACCT", "ACCT2101"
+
     main("2025", "LAWS", "LAWS3900")
 
 
