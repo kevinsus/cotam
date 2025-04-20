@@ -102,8 +102,9 @@ if __name__ == "__main__":
     # courses: https://timetable.unsw.edu.au/2025/subjectSearch.html
     # course outcomes: https://www.unsw.edu.au/course-outlines
     # default: "2025", "ACCT", "ACCT2101"
+    # cut off: COMM1170, CONS0002, LAWS2384, LAWS8225,COMM2233, FINS2643
 
-    main("2025", "COMP", "COMP6080")
+    main("2024", "COMM", "COMM2244")
 
 
 # re.search => returns a match object if there is match anywhere in the tring, 
