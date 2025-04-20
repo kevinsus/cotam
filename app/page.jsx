@@ -92,7 +92,7 @@ const Home = () => {
         <div>
             <div className='cus-centerpage cus-page gap-10'>
                 <div className='cus-centerpage'>
-                    <button className='text-white cus-lg-highlight-btn bg-blue-600'>Feedback</button>
+                    <Link href={"/feedback"} className='text-white cus-lg-highlight-btn bg-blue-600'>Feedback</Link>
                     <p className='text-black'>Want to help improve out app? Share your Feedback</p>
                 </div>
             </div>
