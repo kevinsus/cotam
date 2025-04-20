@@ -32,8 +32,12 @@
     @apply block text-sm font-medium leading-6 text-gray-900
 }
 
-.cus-form-card {
+.cus-form-d-card {
     @apply sm:max-w-sm sm:mx-auto sm:w-full p-10 rounded-xl border border-gray-300 shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)]
+}
+
+.cus-form-card {
+    @apply p-10 rounded-xl border border-blue-300 shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)]
 }
 
 .cus-form-btn {

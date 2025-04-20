@@ -4,9 +4,10 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
+import { WaveFooterSVG } from '@/components'
 import { FcGoogle } from 'react-icons/fc'
 import { FaGithub } from 'react-icons/fa'
-import { useSession, signIn, signOut } from 'next-auth/react'
+import { useSession, signIn } from 'next-auth/react'
 
 const Login = () => {
     const { data: session } = useSession()
@@ -16,14 +17,18 @@ const Login = () => {
     }
 
     return (
-        <div className="px-10 grid md:grid-cols-2 items-center min-h-screen">
-            <div className='cus-form-card'>
-                <div>
+        <div className="min-h-screen flex flex-col justify-center items-center overflow-hidden">
+            <div className='h-150 w-full absolute bottom-0 z-0'>
+                <WaveFooterSVG />
+            </div>
+
+            <div className='z-1 cus-form-card bg-white flex justify-center items-center gap-10'>
+                <div className='w-120'>
                     <div className='border bg-blue-100 rounded-md w-10 h-10 mx-auto'></div>
-                        <h2 className="my-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                            Sign in to your account
-                        </h2>
-                    </div>
+                    <h2 className="my-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                        Sign in to your account
+                    </h2>
+
                     <div>
                         <form onSubmit={login} method="POST" className="space-y-6">
                             <div>
@@ -64,7 +69,7 @@ const Login = () => {
                                     />
                                 </div>
                             </div>
-                            
+                                
                             <div>
                                 <button type="submit" className="cus-form-btn">Sign in</button>
                             </div>
@@ -89,8 +94,9 @@ const Login = () => {
                         </p>
                     </div>
                 </div>
-            <div className="lg:h-[400px] md:h-[300px] max-md:mt-8 flex justify-center items-center">
-                <Image src="/login.jpg" width={600} height={600} className="w-full h-auto" priority alt="Authentication" />
+                <div>
+                    <Image src="/login.svg" width={600} height={600} priority alt="Authentication" />
+                </div>
             </div>
         </div>
     )
