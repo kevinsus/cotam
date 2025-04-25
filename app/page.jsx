@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { WaveHeaderSVG, WaveFooterSVG, BlogSvg, Nav } from '@/components/index'
+import { WaveHeaderSVG, WaveFooterSVG, Nav } from '@/components/index'
 
 const Home = () => {
   return (
@@ -32,9 +32,6 @@ const Home = () => {
         </div>
 
         <div className='text-blue-600 min-h-screen flex justify-center items-center'>
-            {/* <div className='absolute w-3/5 z-0'>
-                <BlogSvg />
-            </div> */}
             <div className='cus-page cus-centerpage gap-10 z-1'>
                 <h1 className='cus-h1'>What We Offer</h1>
                 <div className='flex gap-5'>
@@ -99,7 +96,7 @@ const Home = () => {
             <div className='w-full h-30'>
                 <WaveFooterSVG />
             </div>
-            <div className='cus-mainpage cus-page text-white flex flex-col gap-10 font-bold'>
+            <div className='cus-mainpage cus-page text-white flex flex-col gap-10'>
                 <div className='py-10'>
                     <p>Course Outline Taxonomical Analysis and Mapping (COTAM) is a tool created by passionate students from Scouts Regiment.</p>
                     <p>This website serve as a general guide to understand the outcomes of a course. Please be aware that the information 
