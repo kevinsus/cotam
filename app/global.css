@@ -12,6 +12,10 @@
     @apply lg:text-6xl md:text-5xl sm:text-4xl;
 }
 
+.cus-h2 {
+    @apply lg:text-4xl md:text-3xl sm:text-2xl font-bold;
+}
+
 .cus-mainpage {
     @apply bg-gradient-to-t from-blue-500 to-blue-800
 }

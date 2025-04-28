@@ -25,5 +25,5 @@ const UserSchema = new Schema({
 // In Express JS which requires the backend to run continuously
 // In Next JS, the routes is created and run only when they are called
 
-const User = models.User || model("User", UserSchema)
+const User = models.users || model("users", UserSchema)
 export default User
