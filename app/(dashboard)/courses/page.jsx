@@ -1,108 +1,127 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+
+const dropdownOptions = {
+    year: ['2025', '2024', '2023'],
+    term: ['Term 1', 'Term 2', 'Term 3'],
+    subject: [
+        "ACCT", "ACTL", "AERO", "AGSM", "ANAT", "ARCH", "ARTS", "ATSI", "AVIA", "AVIG",
+        "BABS", "BEES", "BEIL", "BENV", "BINF", "BIOC", "BIOM", "BIOS", "BIOT", "BLDG",
+        "CDEV", "CEIC", "CHEM", "CLIM", "CODE", "COMD", "COMM", "COMP", "CONS", "CRIM",
+        "CRTV", "CVEN", "DATA", "DESN", "DIET", "DPBS", "DPDE", "DPGE", "DPHU", "DPST",
+        "ECON", "EDST", "ELEC", "ENGG", "ENTR", "ENVS", "EXCH", "EXPT", "FADA", "FINS",
+        "FOOD", "GENC", "GENE", "GENL", "GENM", "GENS", "GENY", "GEOL", "GEOS", "GMAT",
+        "GSBE", "GSOE", "HDAT", "HESC", "HLTH", "HUML", "HUMS", "IDES", "IEST", "INFS",
+        "INST", "INTA", "INTD", "JURD", "LAND", "LAWS", "LING", "MANF", "MARK", "MATH",
+        "MATS", "MBAE", "MDCN", "MDIA", "MECH", "MERE", "MFAC", "MFIN", "MGMT", "MICR",
+        "MINE", "MMAN", "MNGT", "MODL", "MSCI", "MTRN", "MUSC", "NCHR", "NEUR", "OBST",
+        "OPTM", "PAED", "PATH", "PHAR", "PHCM", "PHRM", "PHSL", "PHTN", "PHYS", "PLAN",
+        "PLTX", "POLS", "PPEC", "PSCY", "PSYC", "PTRL", "REGZ", "REST", "RISK", "SCIF",
+        "SENG", "SLSP", "SOCA", "SOCF", "SOCW", "SOLA", "SOMS", "SOSS", "SPRC", "SRAP",
+        "STAM", "SURG", "SUSD", "SWCH", "TABL", "TELE", "UDES", "VISN", "YENG", "ZZBU",
+        "ZZEN", "ZZLJ", "ZZSC"
+    ]
+}
 
 const Courses = () => {
-    const [yearDropdown, setYearDropdown] = React.useState(false)
-    const [termDropdown, setTermDropdown] = React.useState(false)
-    const [subjectDropdown, setSubjectDropdown] = React.useState(false)
+    const [yearDropdown, setYearDropdown] = useState(false)
+    const [termDropdown, setTermDropdown] = useState(false)
+    const [subjectDropdown, setSubjectDropdown] = useState(false)
 
-    const [year, setYear] = React.useState('Year')
-    const [term, setTerm] = React.useState('Term')
-    const [subject, setSubject] = React.useState('Subject')
-    const [course, setCourse] = React.useState('')
+    const [year, setYear] = useState('Year')
+    const [term, setTerm] = useState('Term')
+    const [subject, setSubject] = useState('Subject')
+    const [course, setCourse] = useState('')
+    const [courses, setCourses] = useState([])
 
-    const setDropDownFunc = (setFunc, string, setDropdown, dropdownString) => {
-        setFunc(`${string}`)
-        setDropdown(!dropdownString)
+    // Handle for closing tabs when clicked outside buttons
+    const closeAllDropdowns = () => {
+        setYearDropdown(false)
+        setTermDropdown(false)
+        setSubjectDropdown(false)
     }
 
+    const dropdownRef = React.useRef(null)
+    function handleClickOutside(e) {
+        if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+            closeAllDropdowns()
+        }
+    }
+    
+    React.useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside)
+    }, [])
+
+    // Handle Input
+    const setDropdownBtn = ( setDropdownFunc, item) => {
+        setDropdownFunc(item)
+        closeAllDropdowns()
+    }
+    
     const handleFilter = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         const res = await fetch('/api/courses', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ year, term, course })
         })
-
-        const data = await res.json();
-        console.log(data)
-    }
+        const data = await res.json()
+        setCourses(data.courseExist)
+        console.log(data.courseExist)
+    } 
 
     return (
-        <div className='cus-page min-h-screen'>
-            <div className='bg-blue-200 px-5 py-20 rounded-2xl flex flex-col items-center gap-5'>
-                <h2 className='cus-h2'>Add Course</h2>
-                <div>
-                    <label htmlFor="course"></label>
-                    <input 
+        <div className='min-h-screen'>
+            <div className='bg-blue-200 rounded-b-2xl flex flex-col items-center space-y-8 p-10'>
+                
+                <h3 className='cus-h3'>Add Course To List</h3>
+                <input 
+                    placeholder='Enter course code...'
                     id="course"
                     name="course"
                     type="course"
-                    className="cus-input-text bg-white"
+                    className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-2/5 bg-white"
                     onChange={(e) => setCourse(e.target.value)}
-                    />
-                </div>
+                />
 
-                <div className='flex justify-around gap-20'>
-                    <div className=' flex flex-col justify-center'>
-                        <button onClick={() => setYearDropdown(!yearDropdown)} className='cus-lg-highlight-btn bg-white' >{year}</button>
+                <div className='flex flex-wrap justify-center gap-8'>
+                    <div className='relative' >
+                        <button onClick={() => setYearDropdown(!yearDropdown)} className={`py-2 px-12 w-40 font-bold bg-white rounded-md border-2 border-blue-500`} >{year}</button>
                         { yearDropdown && (
-                            <div>
-                                <ul>
-                                    {['2025', '2024', '2023'].map( (itemYear) => (
-                                        <li key={itemYear} onClick={() => setDropDownFunc(setYear, itemYear, setYearDropdown, yearDropdown)}
-                                            className={`cus-lg-highlight-btn shadow-2xl cursor-pointer ${year === itemYear ? 'bg-blue-300' : 'bg-white'}`}
-                                        >{itemYear}</li>
-                                    ) )}
-                                </ul>
-                            </div>
+                            <ul ref={dropdownRef} className='absolute z-10 overflow-auto w-full max-h-60 bg-white rounded-b-md shadow-xl'>
+                                {dropdownOptions.year.map( (item) => (
+                                    <li key={item} onClick={() => setDropdownBtn(setYear, item)}
+                                        className={`px-4 py-2 cursor-pointer hover:bg-blue-100 hover:text-blue-800 ${year === item ? 'bg-blue-300' : 'bg-white'}`}
+                                    >{item}</li>
+                                ) )}
+                            </ul>
                         )}
                     </div>
 
-                    <div className='flex flex-col justify-center'>
-                        <button onClick={() => setTermDropdown(!termDropdown)} className='cus-lg-highlight-btn bg-white' >{term}</button>
+                    <div className='relative'>
+                        <button onClick={() => setTermDropdown(!termDropdown)} className={`py-2 px-12 w-40 font-bold bg-white rounded-md border-2 border-blue-500`} >{term}</button>
                         { termDropdown && (
-                            <div className='flex justify-center'>
-                                <ul>
-                                    {['Term 1', 'Term 2', 'Term 3'].map( (itemTerm) => (
-                                        <li key={itemTerm} onClick={() => setDropDownFunc(setTerm, itemTerm, setTermDropdown, termDropdown)}
-                                            className={`cus-lg-highlight-btn shadow-2xl cursor-pointer ${term === itemTerm ? 'bg-blue-300' : 'bg-white'}`}
-                                        >{itemTerm}</li>
-                                    ) )}
-                                </ul>
-                            </div>
+                            <ul ref={dropdownRef} className='absolute z-10 overflow-auto w-full max-h-60 bg-white rounded-b-md shadow-xl'>
+                                {dropdownOptions.term.map( (item) => (
+                                    <li key={item} onClick={() => setDropdownBtn(setTerm, item)}
+                                        className={`px-4 py-2 cursor-pointer hover:bg-blue-100 hover:text-blue-800 ${term === item ? 'bg-blue-300' : 'bg-white'}`}
+                                    >{item}</li>
+                                ) )}
+                            </ul>
                         )}
                     </div>
 
-                    <div className='flex flex-col justify-center'>
-                        <button onClick={() => setSubjectDropdown(!subjectDropdown)} className='cus-lg-highlight-btn bg-white' >{subject}</button>
+                    <div className='relative'>
+                        <button onClick={() => setSubjectDropdown(!subjectDropdown)} className={`py-2 px-12 w-40 font-bold bg-white rounded-md border-2 border-blue-500`} >{subject}</button>
                         { subjectDropdown && (
-                            <div className='flex justify-center'>
-                                <ul>
-                                    {["ACCT", "ACTL", "AERO", "AGSM", "ANAT", "ARCH", "ARTS", "ATSI", "AVIA", "AVIG",
-                                    "BABS", "BEES", "BEIL", "BENV", "BINF", "BIOC", "BIOM", "BIOS", "BIOT", "BLDG",
-                                    "CDEV", "CEIC", "CHEM", "CLIM", "CODE", "COMD", "COMM", "COMP", "CONS", "CRIM",
-                                    "CRTV", "CVEN", "DATA", "DESN", "DIET", "DPBS", "DPDE", "DPGE", "DPHU", "DPST",
-                                    "ECON", "EDST", "ELEC", "ENGG", "ENTR", "ENVS", "EXCH", "EXPT", "FADA", "FINS",
-                                    "FOOD", "GENC", "GENE", "GENL", "GENM", "GENS", "GENY", "GEOL", "GEOS", "GMAT",
-                                    "GSBE", "GSOE", "HDAT", "HESC", "HLTH", "HUML", "HUMS", "IDES", "IEST", "INFS",
-                                    "INST", "INTA", "INTD", "JURD", "LAND", "LAWS", "LING", "MANF", "MARK", "MATH",
-                                    "MATS", "MBAE", "MDCN", "MDIA", "MECH", "MERE", "MFAC", "MFIN", "MGMT", "MICR",
-                                    "MINE", "MMAN", "MNGT", "MODL", "MSCI", "MTRN", "MUSC", "NCHR", "NEUR", "OBST",
-                                    "OPTM", "PAED", "PATH", "PHAR", "PHCM", "PHRM", "PHSL", "PHTN", "PHYS", "PLAN",
-                                    "PLTX", "POLS", "PPEC", "PSCY", "PSYC", "PTRL", "REGZ", "REST", "RISK", "SCIF",
-                                    "SENG", "SLSP", "SOCA", "SOCF", "SOCW", "SOLA", "SOMS", "SOSS", "SPRC", "SRAP",
-                                    "STAM", "SURG", "SUSD", "SWCH", "TABL", "TELE", "UDES", "VISN", "YENG", "ZZBU",
-                                    "ZZEN", "ZZLJ", "ZZSC"].map( (subectItem) => (
-                                        <li key={subectItem} onClick={() => setDropDownFunc(setSubject, subectItem, setSubjectDropdown, subjectDropdown)}
-                                            className={`cus-lg-highlight-btn shadow-2xl cursor-pointer ${subject === subectItem ? 'bg-blue-300' : 'bg-white'}`}
-                                        >{subectItem}</li>
-                                    ) )}
-                                </ul>
-                            </div>
+                            <ul ref={dropdownRef} className='absolute z-10 overflow-auto w-full max-h-60 bg-white rounded-b-md shadow-xl'>
+                                {dropdownOptions.subject.map( (item) => (
+                                    <li key={item} onClick={() => setDropdownBtn(setSubject, item)}
+                                        className={`px-4 py-2 cursor-pointer hover:bg-blue-100 hover:text-blue-800 ${subject === item ? 'bg-blue-300' : 'bg-white'}`}
+                                    >{item}</li>
+                                ) )}
+                            </ul>
                         )}
                     </div>
 
@@ -112,7 +131,7 @@ const Courses = () => {
                 </div>
 
             </div>
-            <div className='flex py-10 space-x-10'>
+            <div className='flex py-10 space-x-10 cus-page'>
                 <div className='w-lg'>
                     <input 
                     placeholder='Search' 
@@ -123,10 +142,16 @@ const Courses = () => {
                     />
                 </div>
                 
-                {/* Line separating this */}
-
-                <div>
-                    <h1>Hello</h1>
+                <div className=''>
+                {courses.map((course, index) => (
+                    <div key={index}>
+                        <h2 className='cus-h3'>{course.course}</h2>
+                        <h2 className='cus-h3'>{course.year}</h2>
+                        {course.outcomes.map((outcome, i) => (
+                            <div key={i}>{outcome}</div>
+                        ))}
+                    </div>
+                ))}
                 </div>
             </div>
         </div>
