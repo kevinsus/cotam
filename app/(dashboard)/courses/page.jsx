@@ -33,7 +33,7 @@ const Courses = () => {
     const [term, setTerm] = useState('Term')
     const [subject, setSubject] = useState('Subject')
     const [course, setCourse] = useState('')
-    const [courses, setCourses] = useState([])
+    const [courses, setCourses] = useState(new Map)
 
     // Handle for closing tabs when clicked outside buttons
     const closeAllDropdowns = () => {
@@ -67,9 +67,43 @@ const Courses = () => {
             body: JSON.stringify({ year, term, course })
         })
         const data = await res.json()
-        setCourses(data.courseExist)
-        console.log(data.courseExist)
+
+        data.courseExist.map( (courses) => (
+            courses["descriptions"] = `
+            From self-driving cars and humanoid robots to breakthroughs in battery technology and genome sequencing, computer systems are transforming the world. At the heart of these innovations are computers executing instructions to solve complex problems.
+            
+            In this course, you will learn how to instruct computers to solve real-world problems. You'll explore computer architecture and mechanics, and discover how to translate problems into working programs.
+            
+            The concepts covered will lay the groundwork for your future studies in computing and may even shift how you think about everyday challenges.
+            
+            This is an introductory course in computer programming and Computer Science, designed as a foundation for further study in the field. Topics include:
+            
+            - Fundamental programming concepts  
+            - Introduction to Computer Science  
+            - The C programming language and use of a C compiler  
+            - Programming style  
+            - Program design and organisation  
+            - Program testing and debugging  
+            `
+        ))
+        data.courseExist.map( (courses) => (
+            courses["aims"] = `
+            The importance of this course lies in its role as the foundation of your programming journey, providing essential knowledge and skills vital for your success in the field. By focusing on proficiency in the high-level programming language C and fostering problem-solving abilities, this course equips you with the fundamental tools and mindset necessary to think like a programmer.
+    
+            As the first course in the program, it plays a crucial role in setting the stage for your future learning. It serves as a prerequisite for many of the core courses, ensuring that all students begin with a solid understanding of the fundamental concepts required to progress further. By establishing a common knowledge base and skills, this course ensures that everyone starts on an equal footing and can effectively tackle more advanced topics.
+    
+            This course intends to guide you through the initial stages of your programming education, imparting technical proficiency in C and the ability to approach problems systematically and think critically. By emphasizing problem-solving strategies, debugging techniques, and testing methodologies, the course aims to instill in you a resilient and adaptable mindset that will serve as a solid foundation for your future development as a programmer.
+            `
+        ))
+        data.courseExist.forEach(element => {
+            // Only add data when its a unique courses
+            if (!courses.has(element._id)) {
+                setCourse(courses.set(element._id, element))
+            }
+        });
     } 
+
+    const [selectCourseId, setSelectCourseId] = React.useState('')
 
     return (
         <div className='min-h-screen'>
@@ -131,27 +165,47 @@ const Courses = () => {
                 </div>
 
             </div>
-            <div className='flex py-10 space-x-10 cus-page'>
-                <div className='w-lg'>
+            <div className='flex py-10 space-x-10 cus-page h-190'>
+                <div className='flex flex-col h-full items-center space-y-6 w-full'>
                     <input 
-                    placeholder='Search' 
-                    id="search"
-                    name="search"
-                    type="search"
-                    className="cus-input-text bg-white"
+                        placeholder='Search for a course...' 
+                        id="search"
+                        name="search"
+                        type="search"
+                        className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white w-full"
                     />
-                </div>
-                
-                <div className=''>
-                {courses.map((course, index) => (
-                    <div key={index}>
-                        <h2 className='cus-h3'>{course.course}</h2>
-                        <h2 className='cus-h3'>{course.year}</h2>
-                        {course.outcomes.map((outcome, i) => (
-                            <div key={i}>{outcome}</div>
+                    <div className='w-full h-full bg-white border border-gray-300 rounded-md shadow-md p-4 space-y-2'>
+                        {courses.size === 0 && <p className="text-gray-400 text-lg">No courses fetched yet.</p>}
+                        {[...courses.entries()].map(([key, course]) => (
+                            <div key={key} onClick={() => setSelectCourseId(course._id)} className='cursor-pointer hover:bg-blue-100 p-2 rounded-md transition border-2 border-blue-200'>
+                                <div className='font-semibold text-blue-800'>{course.course}</div>
+                                <div className='text-sm text-gray-600'>{course.subject}</div>
+                            </div>
                         ))}
                     </div>
-                ))}
+                </div>
+
+                <div className='w-full bg-white border border-gray-300 rounded-md shadow-md p-4'>
+                    {selectCourseId === '' && <p className='text-gray-400 text-lg flex items-center h-full justify-center'>Please select a course</p>}
+                    {selectCourseId !== '' && 
+                        <div>
+                            <div className='text-xl font-bold text-blue-900'>{courses.get(selectCourseId).course}</div>
+                            <div className='text-gray-700 text-sm mb-4'>{courses.get(selectCourseId).subject} - Term {courses.get(selectCourseId).term} - {courses.get(selectCourseId).year} </div>
+
+                            <div className='text-xl font-bold text-blue-900'>Course Description</div>
+                            <div>{courses.get(selectCourseId).descriptions}</div>
+                            
+                            <div className='text-xl font-bold text-blue-900'>Course Aim</div>
+                            <div>{courses.get(selectCourseId).aims}</div>
+                            
+                            <div className='text-xl font-bold text-blue-900'>Course Outcomes</div>
+                            <ul>
+                                {courses.get(selectCourseId).outcomes.map((outcome, index) => (
+                                    <li key={index}>{outcome}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
