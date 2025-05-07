@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import React, { useState, useEffect, useRef } from 'react'
 
 const dropdownOptions = {
@@ -95,6 +96,10 @@ const Courses = () => {
             This course intends to guide you through the initial stages of your programming education, imparting technical proficiency in C and the ability to approach problems systematically and think critically. By emphasizing problem-solving strategies, debugging techniques, and testing methodologies, the course aims to instill in you a resilient and adaptable mindset that will serve as a solid foundation for your future development as a programmer.
             `
         ))
+        data.courseExist.map( (course) => (
+            course["name"] = 'Programming Fundamentals'
+        ) )
+
         data.courseExist.forEach(element => {
             // Only add data when its a unique courses
             if (!courses.has(element._id)) {
@@ -106,8 +111,8 @@ const Courses = () => {
     const [selectCourseId, setSelectCourseId] = React.useState('')
 
     return (
-        <div className='min-h-screen'>
-            <div className='bg-blue-200 rounded-b-2xl flex flex-col items-center space-y-8 p-10'>
+        <div className='h-screen'>
+            <div className='bg-blue-200 rounded-b-2xl flex flex-col items-center space-y-8 p-10 pt-30 h-2/6'>
                 
                 <h3 className='cus-h3'>Add Course To List</h3>
                 <input 
@@ -165,8 +170,8 @@ const Courses = () => {
                 </div>
 
             </div>
-            <div className='flex py-10 space-x-10 cus-page h-190'>
-                <div className='flex flex-col h-full items-center space-y-6 w-full'>
+            <div className='flex py-10 space-x-10 cus-page h-4/6'>
+                <div className='flex flex-col items-center space-y-6 w-1/3'>
                     <input 
                         placeholder='Search for a course...' 
                         id="search"
@@ -174,10 +179,10 @@ const Courses = () => {
                         type="search"
                         className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white w-full"
                     />
-                    <div className='w-full h-full bg-white border border-gray-300 rounded-md shadow-md p-4 space-y-2'>
+                    <div className='w-full h-full overflow-auto bg-white border border-gray-300 rounded-md shadow-md p-4 space-y-2'>
                         {courses.size === 0 && <p className="text-gray-400 text-lg">No courses fetched yet.</p>}
                         {[...courses.entries()].map(([key, course]) => (
-                            <div key={key} onClick={() => setSelectCourseId(course._id)} className='cursor-pointer hover:bg-blue-100 p-2 rounded-md transition border-2 border-blue-200'>
+                            <div key={key} onClick={() => setSelectCourseId(course._id)} className={`cursor-pointer ${course._id === selectCourseId ? 'bg-blue-100' : 'bg-white'} hover:bg-blue-100 p-2 rounded-md transition border-2 border-blue-200`}>
                                 <div className='font-semibold text-blue-800'>{course.course}</div>
                                 <div className='text-sm text-gray-600'>{course.subject}</div>
                             </div>
@@ -185,25 +190,37 @@ const Courses = () => {
                     </div>
                 </div>
 
-                <div className='w-full bg-white border border-gray-300 rounded-md shadow-md p-4'>
+                <div className='w-2/3 bg-white border border-gray-300 rounded-md shadow-md px-4 pt-4 relative overflow-auto'>
                     {selectCourseId === '' && <p className='text-gray-400 text-lg flex items-center h-full justify-center'>Please select a course</p>}
                     {selectCourseId !== '' && 
-                        <div>
-                            <div className='text-xl font-bold text-blue-900'>{courses.get(selectCourseId).course}</div>
-                            <div className='text-gray-700 text-sm mb-4'>{courses.get(selectCourseId).subject} - Term {courses.get(selectCourseId).term} - {courses.get(selectCourseId).year} </div>
+                        <div className='space-y-4'>
+                            <div className='space-y-1 flex flex-col items-center'>
+                                <div className='text-2xl font-bold text-blue-900'>{courses.get(selectCourseId).course} - {courses.get(selectCourseId).name}</div>
+                                <div className='text-gray-700 text-sm'>{courses.get(selectCourseId).subject} - Term {courses.get(selectCourseId).term} - {courses.get(selectCourseId).year} </div>
+                            </div>
+                            <div>
+                                <div className='text-xl font-bold text-blue-900'>Course Description</div>
+                                <div>{courses.get(selectCourseId).descriptions}</div>
+                            </div>
+                            
+                            <div className='space-y-1'>
+                                <div className='text-xl font-bold text-blue-900'>Course Outcomes</div>
+                                <ul>
+                                    {courses.get(selectCourseId).outcomes.map((outcome, index) => (
+                                        <li key={index}>{`${index+1}) ${outcome}`}</li>
+                                    ))}
+                                </ul>
+                            </div>
 
-                            <div className='text-xl font-bold text-blue-900'>Course Description</div>
-                            <div>{courses.get(selectCourseId).descriptions}</div>
+                            <div className='space-y-1'>
+                                <div className='text-xl font-bold text-blue-900'>Course Aims</div>
+                                <div>{courses.get(selectCourseId).aims}</div>
+                            </div>
                             
-                            <div className='text-xl font-bold text-blue-900'>Course Aim</div>
-                            <div>{courses.get(selectCourseId).aims}</div>
-                            
-                            <div className='text-xl font-bold text-blue-900'>Course Outcomes</div>
-                            <ul>
-                                {courses.get(selectCourseId).outcomes.map((outcome, index) => (
-                                    <li key={index}>{outcome}</li>
-                                ))}
-                            </ul>
+                            <div className='flex justify-end sticky bg-white bottom-0 border-t border-gray-200 py-4 gap-5'>
+                                <Link href={'/analyse'} className='cus-lg-highlight-btn border-2'>See Handbook</Link>
+                                <Link href={'/analyse'} className='cus-lg-highlight-btn bg-blue-800 text-white'>Analyse Course</Link>
+                            </div>
                         </div>
                     }
                 </div>
