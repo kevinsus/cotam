@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState } from 'react'
+import bt_data from '@/bloomsTaxonomy/data.json'
 
 const dropdownOptions = {
     year: ['2025', '2024', '2023'],
@@ -67,6 +68,7 @@ const Courses = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ year, term, course })
         })
+
         const data = await res.json()
 
         data.courseExist.map( (courses) => (
@@ -96,8 +98,11 @@ const Courses = () => {
             This course intends to guide you through the initial stages of your programming education, imparting technical proficiency in C and the ability to approach problems systematically and think critically. By emphasizing problem-solving strategies, debugging techniques, and testing methodologies, the course aims to instill in you a resilient and adaptable mindset that will serve as a solid foundation for your future development as a programmer.
             `
         ))
-        data.courseExist.map( (course) => (
-            course["name"] = 'Programming Fundamentals'
+        data.courseExist.map( (courses) => (
+            courses["name"] = 'Programming Fundamentals'
+        ) )
+        data.courseExist.map( (courses) => (
+            courses["handbook"] = 'https://www.handbook.unsw.edu.au/undergraduate/courses/2022/COMP3131'
         ) )
 
         data.courseExist.forEach(element => {
@@ -106,13 +111,41 @@ const Courses = () => {
                 setCourse(courses.set(element._id, element))
             }
         });
+        
     } 
 
+    // Analyze
+    const [selectPage, setSelectPage] = React.useState('')
     const [selectCourseId, setSelectCourseId] = React.useState('')
+
+    // Map to Bloom's Taxonomy, if match then highlight and store the matched keyword into a new map (for creating the graph)
+    const bt_map = new Map()
+
+    const checkOutcomeBtdata = (keyword) => {
+        const word = keyword.toLowerCase()
+        const bloomsDefinition = ["Creating", "Evaluating", "Analyzing", "Applying", "Understanding", "Remembering"]
+
+        for (const definition of bloomsDefinition) {  
+            const categoryData = bt_data[definition]       
+            if (categoryData.includes(word)) {
+                if (!bt_map.has(definition)) bt_map.set(definition, [word])
+                else { 
+                    let bt_keywords = bt_map.get(definition)
+                    bt_keywords.push(word)
+                    bt_map.set(definition, bt_keywords)
+                }
+                return true
+            } else {
+
+            }
+        }
+
+        return false
+    }
 
     return (
         <div className='h-screen'>
-            <div className='bg-blue-200 rounded-b-2xl flex flex-col items-center space-y-8 p-10 pt-30 h-2/6'>
+            <div className='bg-blue-200 rounded-b-2xl flex flex-col items-center pt-20 justify-center space-y-6 h-2/6'>
                 
                 <h3 className='cus-h3'>Add Course To List</h3>
                 <input 
@@ -182,7 +215,7 @@ const Courses = () => {
                     <div className='w-full h-full overflow-auto bg-white border border-gray-300 rounded-md shadow-md p-4 space-y-2'>
                         {courses.size === 0 && <p className="text-gray-400 text-lg">No courses fetched yet.</p>}
                         {[...courses.entries()].map(([key, course]) => (
-                            <div key={key} onClick={() => setSelectCourseId(course._id)} className={`cursor-pointer ${course._id === selectCourseId ? 'bg-blue-100' : 'bg-white'} hover:bg-blue-100 p-2 rounded-md transition border-2 border-blue-200`}>
+                            <div key={key} onClick={() => {setSelectCourseId(course._id), setSelectPage('')} } className={`cursor-pointer ${course._id === selectCourseId ? 'bg-blue-100' : 'bg-white'} hover:bg-blue-100 p-2 rounded-md transition border-2 border-blue-200`}>
                                 <div className='font-semibold text-blue-800'>{course.course}</div>
                                 <div className='text-sm text-gray-600'>{course.subject}</div>
                             </div>
@@ -191,35 +224,72 @@ const Courses = () => {
                 </div>
 
                 <div className='w-2/3 bg-white border border-gray-300 rounded-md shadow-md px-4 pt-4 relative overflow-auto'>
-                    {selectCourseId === '' && <p className='text-gray-400 text-lg flex items-center h-full justify-center'>Please select a course</p>}
-                    {selectCourseId !== '' && 
-                        <div className='space-y-4'>
+                    { selectPage === '' && (
+                        <>
+                            {selectCourseId === '' && <p className='text-gray-400 text-lg flex items-center h-full justify-center'>Please select a course</p>}
+                            {selectCourseId !== '' && 
+                                <div className='space-y-4 h-full'>
+                                    <div className='space-y-1 flex flex-col items-center'>
+                                        <div className='text-2xl font-bold text-blue-900'>{courses.get(selectCourseId).course} - {courses.get(selectCourseId).name}</div>
+                                        <div className='text-gray-700 text-sm'>{courses.get(selectCourseId).subject} - Term {courses.get(selectCourseId).term} - {courses.get(selectCourseId).year} </div>
+                                    </div>
+                                    <div>
+                                        <div className='text-xl font-bold text-blue-900'>Course Description</div>
+                                        <div>{courses.get(selectCourseId).descriptions}</div>
+                                    </div>
+                                    
+                                    <div className='space-y-1'>
+                                        <div className='text-xl font-bold text-blue-900'>Course Outcomes</div>
+                                        <ul>
+                                            {courses.get(selectCourseId).outcomes.map((outcome, index) => (
+                                                <li key={index}>{`${index+1}) ${outcome}`}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+    
+                                    <div className='space-y-1'>
+                                        <div className='text-xl font-bold text-blue-900'>Course Aims</div>
+                                        <div>{courses.get(selectCourseId).aims}</div>
+                                    </div>
+                                    <div id='space' className='h-1/3'></div>
+                                    
+                                    <div className='flex justify-end sticky bg-white bottom-0 border-t border-gray-200 py-4 gap-5'>
+                                        <Link target='_blank' href={courses.get(selectCourseId).handbook} className='cus-lg-highlight-btn flex justify-center w-60 border-2'>See Handbook</Link>
+                                        <button onClick={() => setSelectPage('analyse')} className='cus-lg-highlight-btn bg-blue-800 text-white flex justify-center w-60'>Analyse Course</button>
+                                    </div>
+
+                                </div>
+                            }
+                        </>
+                    )}
+                    {selectPage === 'analyse' &&
+                        <div className='space-y-4 h-full'>
                             <div className='space-y-1 flex flex-col items-center'>
                                 <div className='text-2xl font-bold text-blue-900'>{courses.get(selectCourseId).course} - {courses.get(selectCourseId).name}</div>
                                 <div className='text-gray-700 text-sm'>{courses.get(selectCourseId).subject} - Term {courses.get(selectCourseId).term} - {courses.get(selectCourseId).year} </div>
                             </div>
-                            <div>
-                                <div className='text-xl font-bold text-blue-900'>Course Description</div>
-                                <div>{courses.get(selectCourseId).descriptions}</div>
-                            </div>
-                            
                             <div className='space-y-1'>
                                 <div className='text-xl font-bold text-blue-900'>Course Outcomes</div>
                                 <ul>
-                                    {courses.get(selectCourseId).outcomes.map((outcome, index) => (
-                                        <li key={index}>{`${index+1}) ${outcome}`}</li>
+                                    {courses.get(selectCourseId).outcomes.map((outcome) => (
+                                        outcome.split(" ").map((word, index) => (
+                                            <p key={index} className={`${checkOutcomeBtdata(word) && 'font-bold text-blue-800' }`}>{word}</p>
+                                        ))
+
+                                        // <li key={index} className='text-md'>{`${index+1}) ${outcome}`}</li>
                                     ))}
                                 </ul>
                             </div>
 
                             <div className='space-y-1'>
-                                <div className='text-xl font-bold text-blue-900'>Course Aims</div>
-                                <div>{courses.get(selectCourseId).aims}</div>
+                                <div className='text-xl font-bold text-blue-900'>Mapping to Bloom's Taxonomy</div>
                             </div>
+
+                            <div id='blank' className='h-1/3'></div>
                             
                             <div className='flex justify-end sticky bg-white bottom-0 border-t border-gray-200 py-4 gap-5'>
-                                <Link href={'/analyse'} className='cus-lg-highlight-btn border-2'>See Handbook</Link>
-                                <Link href={'/analyse'} className='cus-lg-highlight-btn bg-blue-800 text-white'>Analyse Course</Link>
+                                <button onClick={() => setSelectPage('')} className='cus-lg-highlight-btn border-2 flex justify-center w-60'>Back</button>
+                                <button onClick={() => setSelectPage('Mapping')} className='cus-lg-highlight-btn bg-blue-800 text-white flex justify-center w-60'>Ask AI</button>
                             </div>
                         </div>
                     }

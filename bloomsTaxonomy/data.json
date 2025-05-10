@@ -1,0 +1,82 @@
+{
+  "Creating": [
+    "assemble", "author", "brainstorm", "build", "combine", "compose", "construct",
+    "create", "debug", "design", "develop", "devise", "direct", "engineer", "establish",
+    "fabricate", "formulate", "generate", "hypothesize", "imagine", "improve", "initiate",
+    "innovate", "integrate", "invent", "model", "modify", "organize", "originate", "perform",
+    "plan", "predict", "prepare", "produce", "program", "propose", "rearrange", "rebuild",
+    "refactor", "refine", "remix", "reorganize", "revise", "rewrite", "simulate", "sketch",
+    "structure", "synthesize", "visualize", "compile", "conceptualize", "customize", "dramatize",
+    "edit", "elaborate", "envision", "experiment", "film", "form", "grow", "layout", "manipulate",
+    "mix", "paint", "photograph", "plot", "pose", "redesign", "reformulate", "revamp", "rework",
+    "setup", "shorten", "stage", "strengthen", "style", "suggest", "transform", "write", "craft",
+    "draft", "sculpt", "remodel", "decorate", "generate", "architect", "innovate", "streamline",
+    "illustrate", "shape", "structure", "recreate", "strategize", "arrange", "mold", "forge", "assemble"
+  ],
+  "Evaluating": [
+    "agree", "appraise", "argue", "assess", "audit", "choose", "compare", "conclude",
+    "consider", "contrast", "critique", "debate", "decide", "defend", "determine",
+    "disprove", "estimate", "evaluate", "examine", "grade", "interpret", "judge",
+    "justify", "measure", "monitor", "predict", "prioritize", "prove", "rank",
+    "rate", "recommend", "refute", "relate", "review", "score", "select",
+    "speculate", "substantiate", "support", "test", "validate", "value", "verify",
+    "vote", "weigh", "benchmark", "calibrate", "comment", "deduce", "diagnose",
+    "enforce", "forecast", "highlight", "hypothesize", "listen", "mediate", "object",
+    "opine", "pick", "rationalize", "read", "reconcile", "reflect", "resolve",
+    "rule", "scrutinize", "summarize", "triage", "uphold", "warn", "criticize",
+    "rank", "grade", "rebut", "prioritize", "classify", "observe", "reason", "debunk",
+    "analyze", "affirm", "differentiate", "deconstruct", "organize", "sift", "conclude", "deflect"
+  ],
+  "Analyzing": [
+    "abstract", "analyze", "appraise", "argue", "arrange", "attribute", "categorize",
+    "classify", "compare", "contrast", "correlate", "criticize", "debate", "deduce",
+    "differentiate", "disassemble", "discriminate", "dissect", "distinguish", "divide",
+    "examine", "experiment", "explore", "find", "identify", "illustrate", "infer",
+    "inspect", "integrate", "interrogate", "investigate", "map", "model", "monitor",
+    "organize", "outline", "parse", "predict", "question", "reason", "refute", "relate",
+    "research", "scrutinize", "segment", "separate", "subdivide", "survey", "test",
+    "trace", "uncover", "validate", "zoom", "chart", "deconstruct", "define", "derive",
+    "detect", "diagram", "discern", "drill", "group", "index", "link", "locate",
+    "match", "measure", "order", "rank", "rationalize", "spot", "split", "structure",
+    "summarize", "track", "verify", "pattern", "cluster", "flag", "form", "recognize",
+    "streamline", "segment", "attribute", "tag", "sort", "filter", "score", "scan", "segment"
+  ],
+  "Applying": [
+    "administer", "apply", "calculate", "change", "choose", "complete", "compute",
+    "demonstrate", "determine", "develop", "discover", "display", "employ", "execute",
+    "experiment", "implement", "illustrate", "interpret", "manipulate", "modify",
+    "operate", "perform", "practice", "predict", "prepare", "produce", "relate", "run",
+    "show", "sketch", "solve", "translate", "try", "use", "utilize", "adjust", "assemble",
+    "automate", "build", "carry", "construct", "convert", "debug", "deploy", "design",
+    "draw", "enact", "engineer", "explore", "fill", "follow", "generate", "handle",
+    "incorporate", "input", "install", "link", "maintain", "model", "organize", "plug",
+    "process", "program", "realize", "rebuild", "refactor", "refine", "reinforce", "respond",
+    "revise", "simulate", "specify", "structure", "substitute", "tabulate", "test", "transfer",
+    "trigger", "tryout", "usecase", "validate", "visualize", "write", "administer", "deploy", "insert"
+  ],
+  "Understanding": [
+    "account", "arrange", "articulate", "associate", "characterize", "clarify",
+    "classify", "compare", "conclude", "convert", "decode", "define", "describe",
+    "differentiate", "discuss", "elaborate", "estimate", "exemplify", "explain",
+    "express", "extend", "generalize", "highlight", "identify", "illustrate",
+    "infer", "interpret", "locate", "match", "outline", "paraphrase", "predict",
+    "rearrange", "reconstruct", "reorganize", "rephrase", "report", "restate",
+    "review", "sequence", "show", "sort", "state", "summarize", "symbolize",
+    "translate", "understand", "visualize", "analyze", "connect", "contrast",
+    "deduce", "demonstrate", "differentiate", "distinguish", "group", "imagine",
+    "infer", "link", "note", "organize", "pattern", "plan", "recognize", "reflect",
+    "relate", "represent", "skim", "structure", "trace", "view", "map", "review", "chart"
+  ],
+  "Remembering": [
+    "cite", "copy", "define", "describe", "enumerate", "find", "identify", "label",
+    "list", "locate", "match", "memorize", "name", "order", "outline", "quote", "read",
+    "recall", "recite", "recognize", "record", "repeat", "reproduce", "retrieve",
+    "select", "state", "tabulate", "tell", "write", "access", "arrange", "associate",
+    "check", "circle", "classify", "collect", "count", "designate", "determine",
+    "distinguish", "earmark", "exhibit", "fill", "flag", "give", "index", "indicate",
+    "mark", "mention", "note", "number", "organize", "point", "read", "recollect",
+    "refer", "remind", "review", "spell", "trace", "underline", "verify", "list",
+    "group", "relate", "learn", "highlight", "recognize", "match", "scan", "tick",
+    "circle", "recall", "mark", "remember", "identify", "pinpoint", "retrieve"
+  ]
+}
