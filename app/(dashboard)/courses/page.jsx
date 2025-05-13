@@ -121,26 +121,47 @@ const Courses = () => {
     // Map to Bloom's Taxonomy, if match then highlight and store the matched keyword into a new map (for creating the graph)
     const bt_map = new Map()
 
-    const checkOutcomeBtdata = (keyword) => {
-        const word = keyword.toLowerCase()
+    const mapOutcomeToBT = (outcome) => {
+        let checkOneBtObj = false
         const bloomsDefinition = ["Creating", "Evaluating", "Analyzing", "Applying", "Understanding", "Remembering"]
+        const outcomeMap = new Map()
 
-        for (const definition of bloomsDefinition) {  
-            const categoryData = bt_data[definition]       
-            if (categoryData.includes(word)) {
-                if (!bt_map.has(definition)) bt_map.set(definition, [word])
-                else { 
-                    let bt_keywords = bt_map.get(definition)
-                    bt_keywords.push(word)
-                    bt_map.set(definition, bt_keywords)
-                }
-                return true
-            } else {
-
+        // Map all keywords in bloom's taxonomy to their definition as its value 
+        for (const def of bloomsDefinition) {
+            for (const word of bt_data[def]) {
+                outcomeMap.set(word.toLowerCase(), def)
             }
         }
 
-        return false
+        return (
+            <p>
+                {outcome.split(" ").map((word, index) => {
+                    const cleanWord = word.toLowerCase().replace(/[.,!?]/g, '')
+                    const category = outcomeMap.get(cleanWord)
+
+                    if (category && !checkOneBtObj) {
+                        checkOneBtObj = true
+                        return (
+                            <span>
+                                <span key={index} className='font-bold text-blue-800 bg-amber-300'>
+                                    {word}
+                                </span>
+                                {index < outcome.split(' ').length - 1 && ' '}
+                            </span>
+                        )
+                    } else {
+                        return (
+                            <span>
+                                <span key={index} >
+                                    {word}
+                                </span>
+                                {index < outcome.split(' ').length - 1 && ' '}
+                            </span>
+                        )
+                    }
+                })}
+            </p>
+        ) 
     }
 
     return (
@@ -272,12 +293,15 @@ const Courses = () => {
                                 <div className='text-xl font-bold text-blue-900'>Course Outcomes</div>
                                 <ul>
                                     {courses.get(selectCourseId).outcomes.map((outcome) => (
+                                        mapOutcomeToBT(outcome)
+                                    ))}
+                                    {/* {courses.get(selectCourseId).outcomes.map((outcome) => (
                                         outcome.split(" ").map((word, index) => (
                                             <p key={index} className={`${checkOutcomeBtdata(word) && 'font-bold text-blue-800' }`}>{word}</p>
                                         ))
 
                                         // <li key={index} className='text-md'>{`${index+1}) ${outcome}`}</li>
-                                    ))}
+                                    ))} */}
                                 </ul>
                             </div>
 
