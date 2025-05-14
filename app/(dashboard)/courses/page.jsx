@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
 import bt_data from '@/bloomsTaxonomy/data.json'
+import { AiReasoning, Chart } from './_components'
 
 const dropdownOptions = {
     year: ['2025', '2024', '2023'],
@@ -120,8 +121,11 @@ const Courses = () => {
 
     // Map to Bloom's Taxonomy, if match then highlight and store the matched keyword into a new map (for creating the graph)
     const bt_map = new Map()
+    for (const def of Object.keys(bt_data)) {
+        bt_map.set(def, [])
+    }
 
-    const mapOutcomeToBT = (outcome) => {
+    const mapOutcomeToBT = (outcome, indexKey) => {
         let checkOneBtObj = false
         const bloomsDefinition = ["Creating", "Evaluating", "Analyzing", "Applying", "Understanding", "Remembering"]
         const outcomeMap = new Map()
@@ -134,16 +138,22 @@ const Courses = () => {
         }
 
         return (
-            <p>
+            <p key={indexKey}>
                 {outcome.split(" ").map((word, index) => {
                     const cleanWord = word.toLowerCase().replace(/[.,!?]/g, '')
                     const category = outcomeMap.get(cleanWord)
 
                     if (category && !checkOneBtObj) {
                         checkOneBtObj = true
+
+                        // If keyword matched with one of the definition, then map them for creating graph
+                        let categoryKeywords = bt_map.get(category)
+                        categoryKeywords.push(cleanWord)
+                        bt_map.set(category, categoryKeywords)
+
                         return (
-                            <span>
-                                <span key={index} className='font-bold text-blue-800 bg-amber-300'>
+                            <span key={index}>
+                                <span className='font-bold underline'>
                                     {word}
                                 </span>
                                 {index < outcome.split(' ').length - 1 && ' '}
@@ -151,8 +161,8 @@ const Courses = () => {
                         )
                     } else {
                         return (
-                            <span>
-                                <span key={index} >
+                            <span key={index}>
+                                <span>
                                     {word}
                                 </span>
                                 {index < outcome.split(' ').length - 1 && ' '}
@@ -292,24 +302,21 @@ const Courses = () => {
                             <div className='space-y-1'>
                                 <div className='text-xl font-bold text-blue-900'>Course Outcomes</div>
                                 <ul>
-                                    {courses.get(selectCourseId).outcomes.map((outcome) => (
-                                        mapOutcomeToBT(outcome)
+                                    {courses.get(selectCourseId).outcomes.map((outcome, index) => (
+                                        mapOutcomeToBT(outcome, index)
                                     ))}
-                                    {/* {courses.get(selectCourseId).outcomes.map((outcome) => (
-                                        outcome.split(" ").map((word, index) => (
-                                            <p key={index} className={`${checkOutcomeBtdata(word) && 'font-bold text-blue-800' }`}>{word}</p>
-                                        ))
-
-                                        // <li key={index} className='text-md'>{`${index+1}) ${outcome}`}</li>
-                                    ))} */}
                                 </ul>
                             </div>
 
                             <div className='space-y-1'>
                                 <div className='text-xl font-bold text-blue-900'>Mapping to Bloom's Taxonomy</div>
+                                <div className='w-full flex flex-col justify-center items-center gap-10'>
+                                    <Chart data={bt_map} />
+                                    <AiReasoning data={bt_data} />
+                                </div>
                             </div>
 
-                            <div id='blank' className='h-1/3'></div>
+                            <div id='space' className='h-1/3'></div>
                             
                             <div className='flex justify-end sticky bg-white bottom-0 border-t border-gray-200 py-4 gap-5'>
                                 <button onClick={() => setSelectPage('')} className='cus-lg-highlight-btn border-2 flex justify-center w-60'>Back</button>
