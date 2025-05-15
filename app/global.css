@@ -25,11 +25,11 @@
 }
 
 .cus-lg-highlight-btn {
-    @apply rounded-md py-2 px-12 font-bold
+    @apply rounded-md py-2 px-12 font-bold cursor-pointer
 }
 
 .cards {
-    @apply border-2 bg-white border-blue-800 shadow-lg rounded-2xl p-10 flex flex-col justify-center items-center space-y-5 hover:shadow-2xl transition duration-300 ease-in-out hover:scale-105
+    @apply border-2 border-blue-800 shadow-lg rounded-2xl p-10 flex flex-col justify-center items-center space-y-5 hover:shadow-2xl transition duration-300 ease-in-out hover:scale-105
 }
 
 .cus-form-header {
@@ -49,7 +49,7 @@
 }
 
 .cus-form-btn {
-    @apply flex w-full justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600
+    @apply flex w-full justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 cursor-pointer focus-visible:outline-offset-2 focus-visible:outline-indigo-600
 }
 
 .cus-form-text {
@@ -61,5 +61,5 @@
 }
 
 .cus-auth-btn {
-    @apply flex w-full justify-center rounded-md border border-gray-300 px-3 py-2 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600
+    @apply flex w-full justify-center rounded-md border border-gray-300 cursor-pointer px-3 py-2 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600
 }  

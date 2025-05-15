@@ -14,7 +14,6 @@ const Feedback = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            console.log(email, message)
             const res = await fetch ('/api/send', {
                 method: 'POST',
                 headers: {

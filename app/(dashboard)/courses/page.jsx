@@ -312,7 +312,7 @@ const Courses = () => {
                                 <div className='text-xl font-bold text-blue-900'>Mapping to Bloom's Taxonomy</div>
                                 <div className='w-full flex flex-col justify-center items-center gap-10'>
                                     <Chart data={bt_map} />
-                                    <AiReasoning data={bt_data} />
+                                    <AiReasoning data={bt_map} clo={courses.get(selectCourseId).outcomes} />
                                 </div>
                             </div>
 
@@ -320,7 +320,7 @@ const Courses = () => {
                             
                             <div className='flex justify-end sticky bg-white bottom-0 border-t border-gray-200 py-4 gap-5'>
                                 <button onClick={() => setSelectPage('')} className='cus-lg-highlight-btn border-2 flex justify-center w-60'>Back</button>
-                                <button onClick={() => setSelectPage('Mapping')} className='cus-lg-highlight-btn bg-blue-800 text-white flex justify-center w-60'>Ask AI</button>
+                                <button className='cus-lg-highlight-btn disabled:bg-gray-300 bg-blue-800 disabled:true text-white flex justify-center w-60' disabled={true} >Analyse Course</button>
                             </div>
                         </div>
                     }
